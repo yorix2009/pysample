@@ -47,6 +47,13 @@ class DbUser(BaseUser):
     def calc(x, y):
         return x + y
 
+class AppException(Exception):
+    def __init__(self, msg):
+        self._msg = msg
+
+    def __str__(self):
+        return "AppException:" + self._msg
+
 
 o = DbUser('1000', '张三')
 o.name = 'james'
@@ -56,3 +63,8 @@ print(DbUser.calc(1, 2))
 b = BaseUser('1001')
 print(b)
 print('访问__的特殊方法', b._BaseUser__version)
+try:
+    if int(o._id) < 10001:
+        raise AppException('X<100')
+except AppException as e:# 捕获异常
+    print(e)
