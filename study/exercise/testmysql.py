@@ -8,6 +8,18 @@ import time
 show_title('Mysql数据库操作')
 print('安装驱动：pip3 install mysql-connector-python')
 
+def queryData(conn):
+    cursor = conn.cursor()
+    try:
+        cursor.execute("select * from wp_config;")
+        r = list()
+        for r in cursor:
+            row = dict(zip(cursor.column_names, r))
+            print(row['id'], '%-30s' % row['name'], '%-30s' % row['title'])
+    except mysql.connector.Error as e:
+        print('query error!{}'.format(e))
+    finally:
+        cursor.close()
 
 def query_data(cnx):
     cr = cnx.cursor()
