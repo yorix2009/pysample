@@ -2,7 +2,10 @@ import re
 import mysql.connector
 from mysql.connector import errorcode
 import uuid
+import json
 
+
+# 正则表达式匹配
 def search_data(subject, expr):
     match = re.search(expr, subject)
     if match:
@@ -11,23 +14,35 @@ def search_data(subject, expr):
         result = None
     return result
 
+
+# 正则表达式匹配
 def runtest():
     # 获取第一个匹配项
-    m=re.search(r"(\d{1,3})","Hello no.100 to 200")
+    m = re.search(r"(\d{1,3})", "Hello no.100 to 200")
     if m:
-        print("验证通过",m.start(),m.end(),m.groups(),m.group(1))
+        print("验证通过", m.start(), m.end(), m.groups(), m.group(1))
 
     else:
         print("验证失败")
-    #循环获取所有的匹配项
+    # 循环获取所有的匹配项
     for match in re.finditer(r"(\d{1,3})", "Hello no.100 to 200"):
         print(match.group(1))
-    #返回list
-    data=re.findall(r'\d{1,3}','123,james,H345')
+    # 返回list
+    data = re.findall(r'\d{1,3}', '123,james,H345')
     print(data)
-    data=re.split("\d{1,3}","Hello no.100 to 200,test300",0)
+    data = re.split("\d{1,3}", "Hello no.100 to 200,test300", 0)
     print(data)
-    print("uuid=>",str(uuid.uuid1()),uuid.uuid1().hex)
+    print("uuid=>", str(uuid.uuid1()), uuid.uuid1().hex)
+
+
+# 实现JSON的编码处理功能
+def runjson():
+    s = json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
+    obj = json.loads(s)
+    obj[1]['id'] = 123
+    print(s)
+    print(obj)
+
 
 def process_db():
     dbpm = {'user': 'root', 'password': '123', 'host': '', 'database': '', 'use_pure': True, }
@@ -52,4 +67,4 @@ def process_db():
 
 
 if __name__ == '__main__':
-    runtest()
+    runjson()

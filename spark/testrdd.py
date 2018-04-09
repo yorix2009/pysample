@@ -5,6 +5,7 @@
 # 一种初始化方法
 from pyspark.sql import SparkSession
 
+
 spark = SparkSession.builder.appName("SimpleApp").getOrCreate()
 sc = spark.sparkContext
 
