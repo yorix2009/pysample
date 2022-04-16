@@ -1,6 +1,8 @@
 # coding: UTF-8
 import matplotlib.pyplot as plt
 import numpy as np
+from io import BytesIO
+import base64
 
 # Data for plotting
 t = np.arange(0.0, 2.0, 0.01)
@@ -16,4 +18,10 @@ ax.set(xlabel='time (s)', ylabel='voltage (mV)',
 ax.grid()
 
 fig.savefig("test.png")
-plt.show()
+img = BytesIO()
+plt.savefig(img, format='png')
+img.seek(0)
+# img转义base64编码
+img_base64 = base64.b64encode(img.getvalue()).decode('utf8')
+print('hello',img_base64)
+#plt.show()
